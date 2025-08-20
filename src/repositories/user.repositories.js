@@ -10,25 +10,25 @@ db.run(`
         )
    `)
 
-function createUseRepository(newUser){
-    return new Promise((res, rej) => {
-        const { usename, email, password, avatar } = newUser
-        db.run(`
-              INSERT INTO users (usename, email, password, avatar)
-              VALUES (?, ?, ?, ?)
-            `
-            [ usename, email, password, avatar ],
-            (err) =>{
-                if (err){
-                    rej(err)
+   function createUserRepository(newUser) {
+    return new Promise((resolve, reject) => {
+        const { usename, email, password, avatar } = newUser;
+        db.run(
+            `INSERT INTO users (usename, email, password, avatar)
+             VALUES (?, ?, ?, ?)`,
+            [usename, email, password, avatar],
+            function(err) { 
+                if (err) {
+                    reject(err);
                 } else {
-                    res({message: "use create"})
+                    resolve({ id: this.lastID, ...newUser });
                 }
             }
-        )
-    })
+        );
+    });
 }
 
+
 export default {
-    createUseRepository
+    createUserRepository
 }
