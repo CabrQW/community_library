@@ -9,7 +9,7 @@ router.post('/users', validate(userSchema),  userControllers.createUseController
 
 router.get('/users', userControllers.findAllUserByIdController)
 router.get("/users/:id", validateUserId, userControllers.findAllUserByIdController)
-router.put("/users/:id", validateUserId, validate(userSchema), userControllers.updateUserController)
+router.patch("/users/:id", validateUserId, userControllers.updateUserController)
 router.delete("/users/:id",validateUserId, userControllers.deleteUserController)
 
 export default router

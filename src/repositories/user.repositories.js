@@ -85,25 +85,27 @@ db.run(`
 
   function updateUserRepository(id, user) {
     return new Promise((resolve, reject) => {
-      const {usename, email, password, avatar} = user
-      db.run(
-        `
-          UPDATE user SET 
-          usename =?, 
-          email=?, 
-          password =?, 
-          avatar =?,
-          WHERE id = ?,
-        `,
-        [usename, email, password, avatar, id],
-        (err) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve({id, ...user});
-          }
+      const fields = ["usename", "email", "password", "avatar" ]
+      let query = "UPDATE users SET "
+      const values = []
+
+      fields.forEach((field) => {
+        if (user[field] !== undefined) {
+          query += `${field} = ?, `
+          values.push(user[field])
         }
-      );
+      })
+      query = query.slice(0, -1)
+
+      query += " WHERE id = ?"
+      values.push(id)
+      db.run(query, values, function(err){
+        if (err) {
+          reject(err)
+        } else {
+          resolve({...user, id})
+        }
+      })
     });
   }
 
