@@ -1,15 +1,21 @@
 import { Router } from "express";
-import userControllers from "../controller/user.controllers.js";
-import { validate, validateUserId } from "../middlewares/validation.middlewares.js";
+import userControrller from "../controller/user.controllers.js";
+import {
+  validate,
+  validateUserId,
+} from "../middlewares/validation.middlewares.js";
 import { userSchema } from "../schema/user.schema.js";
+import { authMiddleware } from "../middlewares/auth.middleware.js";
 
-const router = Router()
+const router = Router();
 
-router.post('/users', validate(userSchema),  userControllers.createUseController)
+router.post("/", validate(userSchema), userControrller.createUserController);
+router.post("/login", userControrller.userLoginController);
 
-router.get('/users', userControllers.findAllUserByIdController)
-router.get("/users/:id", validateUserId, userControllers.findAllUserByIdController)
-router.patch("/users/:id", validateUserId, userControllers.updateUserController)
-router.delete("/users/:id",validateUserId, userControllers.deleteUserController)
+router.use(authMiddleware);
+router.get("/", userControrller.findAllUserController);
+router.get("/:id", validateUserId, userControrller.findUserByIdController);
+router.patch("/:id", validateUserId, userControrller.updateUserController);
+router.delete("/:id", validateUserId, userControrller.deleteUserController);
 
-export default router
+export default router;
