@@ -1,0 +1,20 @@
+import bookRepository from "../repositories/book.repositories.js";
+
+async function createBookService(newBook, userId) {
+    const createdBook = await bookRepository.createBookReposetory(
+        newBook,
+        userId
+    )
+    if (!createdBook) throw new Error("Error creating Book")
+        return createdBook
+}
+
+async function findAllBookService() {
+    const books = await bookRepository.findAllBookRepository()
+    return books
+}
+
+export default {
+    createBookService,
+    findAllBookService
+}
