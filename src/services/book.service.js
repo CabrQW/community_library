@@ -39,10 +39,17 @@ async function updateBookService(updatedBook, bookId, userId) {
     return response
 }
 
+async function searchBooksService(search) {
+    if (!search) return await bookRepository.findAllBookRepository()
+    const books = await bookRepository.searchBooksRepository(search)
+    return books
+}
+
 export default {
     createBookService,
     findAllBookService,
     findBookByIdService,
     updateBookService,
-    deleteBookService
+    deleteBookService,
+    searchBooksService 
 }

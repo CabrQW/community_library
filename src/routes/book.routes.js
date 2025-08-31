@@ -10,6 +10,8 @@ router.get("/books", bookControllers.findAllBooksController)
 
 router.use(authMiddleware)
 router.post("/books", validate(bookSchema),authMiddleware,bookControllers.createBookController)
+
+router.get("books/search", bookControllers.searchBooksController)
 router.get("books/:id", validateBookId, bookControllers.findBookByIdController)
 router.patch("books/:id", validateBookId, bookControllers.updateBookController)
 router.delete("books/:id", validateBookId, bookControllers.deleteBookController)
