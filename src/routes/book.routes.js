@@ -6,14 +6,14 @@ import { bookSchema } from "../schema/book.schema.js";
 
 const router = Router()
 
-router.get("/books", bookControllers.findAllBooksController)
+router.get("/", bookControllers.findAllBooksController)
 
 router.use(authMiddleware)
-router.post("/books", validate(bookSchema),authMiddleware,bookControllers.createBookController)
+router.post("/", validate(bookSchema),authMiddleware,bookControllers.createBookController)
 
-router.get("books/search", bookControllers.searchBooksController)
-router.get("books/:id", validateBookId, bookControllers.findBookByIdController)
-router.patch("books/:id", validateBookId, bookControllers.updateBookController)
-router.delete("books/:id", validateBookId, bookControllers.deleteBookController)
+router.get("/search", bookControllers.searchBooksController)
+router.get("/:id", validateBookId, bookControllers.findBookByIdController)
+router.patch("/:id", validateBookId, bookControllers.updateBookController)
+router.delete("/:id", validateBookId, bookControllers.deleteBookController)
 
 export default router
