@@ -2,6 +2,7 @@ import express from 'express'
 import useRouters from './src/routes/user.routes.js'
 import bookRouters from './src/routes/book.routes.js'
 import loanRouters from './src/routes/loan.routes.js'
+import "./src/services/cron.service.js"
 import "dotenv/config"
 const app = express()
 
